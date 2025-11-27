@@ -5,15 +5,15 @@ chcp 65001 >nul
 :: ==========================
 :: CONFIGURAÇÕES GERAIS
 :: ==========================
-set "WORKDIR=C:\TempUpgradeW11"
+set "WORKDIR=C:\ISO"
 set "ISOFILENAME=Win11.iso"
 set "LOCALISO=%WORKDIR%\%ISOFILENAME%"
 set "TMPDOWNLOAD=%LOCALISO%.download"
-set "BAD_ISO_DIR=%WORKDIR%\InvalidISOs"
-set "LOG_LOCAL=C:\LogsUpgradeW11"
+set "BAD_ISO_DIR=%WORKDIR%\PASTA_ISO_RUIM"
+set "LOG_LOCAL=C:\LOGS_W11"
 set "NETWORK_LOG_SHARE=SERVER\Share"
 set "ONEDRIVE_URL=https://example.com/windows.iso"
-set "EXPECTED_HASH=REPLACE_WITH_SHA256"
+set "EXPECTED_HASH=INSIRA_O_HASH_AQUI"
 set "MIN_SIZE=5200000000"
 set "MAX_RETRIES=3"
 set "LOCKFILE=%WORKDIR%\UpgradeInProgress.lock"
@@ -30,7 +30,7 @@ set "TEMPUPG=%TEMPPATH%\UpgradeTemp"
 if not exist "%TEMPUPG%" mkdir "%TEMPUPG%" >nul 2>&1
 
 :: Define o arquivo de log imediatamente
-set "NETWORK_LOG_SHARE=\\SERVER\LogsUpgradeW11\%COMPUTERNAME%"
+set "NETWORK_LOG_SHARE=\\SERVER\LOGS_W11\%COMPUTERNAME%"
 if exist "%NETWORK_LOG_SHARE%\" (
     set "LOGFILE=%NETWORK_LOG_SHARE%\%COMPUTERNAME%-UpgradeLog.log"
 ) else (
@@ -46,7 +46,7 @@ echo %date% %time% > "%LOCKFILE%"
 echo [%date% %time%] Lockfile criado com sucesso em "%LOCKFILE%" >> "%TEMPPATH%\UpgradeLog.log"
 
 :: --- DEFINIR LOGFILE IMEDIATAMENTE (corrige fechamentos por >> "%LOGFILE%")
-set "DESTINO_REDE=\\SERVER\LogsUpgradeW11"
+set "DESTINO_REDE=\\SERVER\LOGS_W11"
 set "PASTA_COMPUTADOR=%DESTINO_REDE%\%COMPUTERNAME%"
 set "LOCAL_LOG_FOLDER=%TEMPPATH%\%COMPUTERNAME%"
 set "MAX_TENTATIVAS=5"
@@ -86,9 +86,9 @@ echo [ERRO] Rede inacessível. Log definido localmente em %LOGFILE%
 :: ==========================
 :: COPIAR LOGS DO SETUP
 :: ==========================
-copy /y "C:\TempUpgradeLogs\setupact.log" "%LOCAL_LOG_FOLDER%\" >nul 2>&1
-copy /y "C:\TempUpgradeLogs\setuperr.log" "%LOCAL_LOG_FOLDER%\" >nul 2>&1
-echo [%date% %time%] Logs copiados da pasta C:\TempUpgradeLogs e armazenados em: %LOCAL_LOG_FOLDER% >> "%LOGFILE%"
+copy /y "C:\PASTA_LOGS\setupact.log" "%LOCAL_LOG_FOLDER%\" >nul 2>&1
+copy /y "C:\PASTA_LOGS\setuperr.log" "%LOCAL_LOG_FOLDER%\" >nul 2>&1
+echo [%date% %time%] Logs copiados da pasta C:\PASTA_LOGS e armazenados em: %LOCAL_LOG_FOLDER% >> "%LOGFILE%"
 
 :: ==========================================================
 :: VERIFICAÇÃO SE O SISTEMA ESTÁ AGUARDANDO REINICIALIZAÇÃO DO UPGRADE
@@ -110,7 +110,7 @@ call :LogMessage "Nenhum sinal de migração concluída. Continuando normalmente
 call :LogMessage "Removendo pastas residuais antes do upgrade..."
 
 call :RemoverPasta "C:\$WINDOWS.~BT"
-call :RemoverPasta "C:\TempUpgradeW11\InvalidISOs"
+call :RemoverPasta "C:\ISO\PASTA_ISO_RUIM"
 call :RemoverPasta "C:\Windows10Upgrade"
 call :RemoverPasta "C:\$WINDOWS.~WS"
 
@@ -310,7 +310,7 @@ if not defined DriveLetter (
 call :LogMessage "ISO montada em %DriveLetter%:"
 
 set "SETUPPATH=%DriveLetter%:\sources\setupprep.exe"
-set "ARGUMENTS=/auto upgrade /dynamicupdate disable /noreboot /quiet /compat ignorewarning /eula accept /product server /migratedrivers all /showoobe none /telemetry disable /reflectdrivers /copylogs C:\TempUpgradeLogs"
+set "ARGUMENTS=/auto upgrade /dynamicupdate disable /noreboot /quiet /compat ignorewarning /eula accept /product server /migratedrivers all /showoobe none /telemetry disable /reflectdrivers /copylogs C:\PASTA_LOGS"
 
 echo %date% %time% > "%REBOOT_FLAG%"
 call :LogMessage "Executando setup (%SETUPPATH%)..."
