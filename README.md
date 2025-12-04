@@ -43,7 +43,7 @@ Faz até 5 tentativas de ping.
 Caso consiga acessar o compartilhamento:
 
 Logs são enviados para:
-\\10.120.5.36\LogsUpgradeW11\<COMPUTERNAME>
+\\SERVER\LogsUpgradeW11\<COMPUTERNAME>
 
 Caso falhe:
 
