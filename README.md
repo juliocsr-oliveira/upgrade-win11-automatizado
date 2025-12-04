@@ -1,4 +1,4 @@
-Script de atualização automatica para o Windows.
+Script de atualização automática para o Windows.
 
 Descrição Geral
 
