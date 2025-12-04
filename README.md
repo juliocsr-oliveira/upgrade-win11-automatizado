@@ -1,8 +1,8 @@
-Windows 11 Automated Upgrade Script
+Script de atualização automatizada para o Windows.
 
 Descrição Geral
 
-Este projeto contém um script Batch completamente automatizado, desenvolvido para realizar upgrades para o Windows 11 24H2 de forma segura, robusta e altamente tolerante a falhas.
+Este projeto contém um script batch completamente automatizado, desenvolvido para realizar upgrades para o Windows 11 24H2 de forma segura, robusta e altamente tolerante a falhas.
 
 Ele foi utilizado em ambiente de produção e inclui:
 
@@ -30,7 +30,7 @@ Proteção contra reinicializações incorretas
 
 Fluxo Completo do Script
 
-1. Criação de lockfile
+1. Criação de lockfile e criação da pasta de logs.
 
 Garante que apenas uma instância do upgrade esteja rodando.
 
@@ -63,7 +63,7 @@ Para a pasta de logs definida na etapa anterior.
 
 Caso o sistema já tenha migrado e esteja apenas aguardando reinício:
 
-Script ABORTA imediatamente
+Script aborta imediatamente
 
 Evita corrupção de arquivos críticos da migração
 
@@ -157,7 +157,7 @@ O script usa:
 setupprep.exe /auto upgrade /dynamicupdate disable /noreboot /quiet /compat ignorewarning /eula accept /product server /migratedrivers all /showoobe none /telemetry disable /reflectdrivers /copylogs C:\TempUpgradeLogs
 
 
-A opção /product server é obrigatória para contornar restrições do setup.
+A opção /product server é obrigatória para contornar restrições de hardware.
 
 12. Criação de flags
 
@@ -218,6 +218,8 @@ Permissões de administrador
 Conectividade com o compartilhamento de logs (opcional)
 
 Espaço em disco suficiente para a ISO (≥ 6 GB)
+
+Espaço em disco suficiente para a atualização de fato (≥ 35 GB)
 
 16. Erros Comuns e Diagnósticos
 
